@@ -2,7 +2,7 @@ import BlogRoll from "../../components/BlogRoll"
 import Layout from "../../components/Layout"
 import React from "react"
 
-export const BlogIndexPage = () => (
+const BlogPage = () => (
     <Layout>
         <div
             className="full-width-image-container margin-top-0"
@@ -31,3 +31,5 @@ export const BlogIndexPage = () => (
         </section>
     </Layout>
 )
+
+export default BlogPage

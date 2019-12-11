@@ -2,7 +2,7 @@ import Layout from "../../components/Layout"
 import Link from "gatsby-link"
 import React from "react"
 
-export const Index = () => (
+const Index = () => (
     <Layout>
         <section className="section">
             <div className="container">
@@ -47,3 +47,5 @@ export const Index = () => (
         </section>
     </Layout>
 )
+
+export default Index
