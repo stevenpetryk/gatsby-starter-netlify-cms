@@ -2,9 +2,14 @@ import { Link, graphql } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 
+import { IndexPageTemplateQuery } from "types/graphql-types"
 import BlogRoll from "../components/BlogRoll"
 import Features from "../components/Features"
 import Layout from "../components/Layout"
+
+type IndexPageTemplateProps = RecursiveNonNullable<
+    IndexPageTemplateQuery
+>["markdownRemark"]["frontmatter"]
 
 export const IndexPageTemplate = ({
     image,
@@ -14,7 +19,7 @@ export const IndexPageTemplate = ({
     mainpitch,
     description,
     intro
-}) => (
+}: IndexPageTemplateProps) => (
     <div>
         <div
             className="full-width-image margin-top-0"
@@ -132,30 +137,25 @@ IndexPageTemplate.propTypes = {
     })
 }
 
-const IndexPage = ({ data }) => {
-    const { frontmatter } = data.markdownRemark
-
+const IndexPage = ({
+    data
+}: {
+    data: RecursiveNonNullable<IndexPageTemplateQuery>
+}) => {
+    const { markdownRemark: post } = data
     return (
         <Layout>
             <IndexPageTemplate
-                image={frontmatter.image}
-                title={frontmatter.title}
-                heading={frontmatter.heading}
-                subheading={frontmatter.subheading}
-                mainpitch={frontmatter.mainpitch}
-                description={frontmatter.description}
-                intro={frontmatter.intro}
+                image={post?.frontmatter?.image}
+                title={post?.frontmatter?.title}
+                heading={post?.frontmatter?.heading}
+                subheading={post?.frontmatter?.subheading}
+                mainpitch={post?.frontmatter?.mainpitch}
+                description={post?.frontmatter?.description}
+                intro={post?.frontmatter?.intro}
             />
         </Layout>
     )
-}
-
-IndexPage.propTypes = {
-    data: PropTypes.shape({
-        markdownRemark: PropTypes.shape({
-            frontmatter: PropTypes.object
-        })
-    })
 }
 
 export default IndexPage

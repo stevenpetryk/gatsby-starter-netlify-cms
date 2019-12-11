@@ -1,12 +1,21 @@
+import { BlogPostByIdQuery } from "types/graphql-types"
 import { Link, graphql } from "gatsby"
 import { kebabCase } from "lodash"
 import Content, { HTMLContent } from "../components/Content"
 import Helmet from "react-helmet"
 import Layout from "../components/Layout"
-import PropTypes from "prop-types"
 import React from "react"
 
-export const BlogPostTemplate = ({
+interface BlogPostTemplateProps {
+    content?: string | null
+    contentComponent?: React.FC<any>
+    description?: string | null
+    tags?: (string | null)[] | null
+    title?: string | null
+    helmet?: React.ReactNode | null
+}
+
+export const BlogPostTemplate: React.FC<BlogPostTemplateProps> = ({
     content,
     contentComponent,
     description,
@@ -31,15 +40,20 @@ export const BlogPostTemplate = ({
                             <div style={{ marginTop: `4rem` }}>
                                 <h4>Tags</h4>
                                 <ul className="taglist">
-                                    {tags.map(tag => (
-                                        <li key={`tag${tag}`}>
-                                            <Link
-                                                to={`/tags/${kebabCase(tag)}/`}
-                                            >
-                                                {tag}
-                                            </Link>
-                                        </li>
-                                    ))}
+                                    {tags.map(
+                                        tag =>
+                                            tag && (
+                                                <li key={`tag${tag}`}>
+                                                    <Link
+                                                        to={`/tags/${kebabCase(
+                                                            tag
+                                                        )}/`}
+                                                    >
+                                                        {tag}
+                                                    </Link>
+                                                </li>
+                                            )
+                                    )}
                                 </ul>
                             </div>
                         ) : null}
@@ -50,43 +64,31 @@ export const BlogPostTemplate = ({
     )
 }
 
-BlogPostTemplate.propTypes = {
-    content: PropTypes.node.isRequired,
-    contentComponent: PropTypes.func,
-    description: PropTypes.string,
-    title: PropTypes.string,
-    helmet: PropTypes.object
-}
-
-const BlogPost = ({ data }) => {
+const BlogPost: React.FC<{
+    data: BlogPostByIdQuery
+}> = ({ data }) => {
     const { markdownRemark: post } = data
 
     return (
         <Layout>
             <BlogPostTemplate
-                content={post.html}
+                content={post?.html}
                 contentComponent={HTMLContent}
-                description={post.frontmatter.description}
+                description={post?.frontmatter?.description}
                 helmet={
                     <Helmet titleTemplate="%s | Blog">
-                        <title>{`${post.frontmatter.title}`}</title>
+                        <title>{`${post?.frontmatter?.title}`}</title>
                         <meta
                             name="description"
-                            content={`${post.frontmatter.description}`}
+                            content={`${post?.frontmatter?.description}`}
                         />
                     </Helmet>
                 }
-                tags={post.frontmatter.tags}
-                title={post.frontmatter.title}
+                tags={post?.frontmatter?.tags}
+                title={post?.frontmatter?.title}
             />
         </Layout>
     )
-}
-
-BlogPost.propTypes = {
-    data: PropTypes.shape({
-        markdownRemark: PropTypes.object
-    })
 }
 
 export default BlogPost

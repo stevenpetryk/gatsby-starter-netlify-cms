@@ -1,10 +1,20 @@
+import { MarkdownRemark } from "types/graphql-types"
 import { graphql } from "gatsby"
 import Content, { HTMLContent } from "../components/Content"
 import Layout from "../components/Layout"
-import PropTypes from "prop-types"
 import React from "react"
 
-export const AboutPageTemplate = ({ title, content, contentComponent }) => {
+interface AboutPageTemplateProps {
+    title?: string | null
+    content?: string | null
+    contentComponent?: React.FC<any>
+}
+
+export const AboutPageTemplate: React.FC<AboutPageTemplateProps> = ({
+    title,
+    content,
+    contentComponent
+}) => {
     const PageContent = contentComponent || Content
 
     return (
@@ -28,28 +38,24 @@ export const AboutPageTemplate = ({ title, content, contentComponent }) => {
     )
 }
 
-AboutPageTemplate.propTypes = {
-    title: PropTypes.string.isRequired,
-    content: PropTypes.string,
-    contentComponent: PropTypes.func
+interface AboutPageProps {
+    data: {
+        markdownRemark: MarkdownRemark
+    }
 }
 
-const AboutPage = ({ data }) => {
+const AboutPage: React.FC<AboutPageProps> = ({ data }) => {
     const { markdownRemark: post } = data
 
     return (
         <Layout>
             <AboutPageTemplate
                 contentComponent={HTMLContent}
-                title={post.frontmatter.title}
+                title={post.frontmatter?.title}
                 content={post.html}
             />
         </Layout>
     )
-}
-
-AboutPage.propTypes = {
-    data: PropTypes.object.isRequired
 }
 
 export default AboutPage
