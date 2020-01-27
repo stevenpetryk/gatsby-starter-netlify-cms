@@ -60,6 +60,7 @@
         "start": "npm run develop",
         "build": "npm run clean && gatsby build",
         "develop": "npm run clean && gatsby develop",
+        "typecheck": "tsc --project tsconfig.json #",
         "lint:js": "eslint ./*.js --cache",
         "lint:json": "prettier '*.json'",
         "lint:ts": "eslint ./src/**/*.ts ./src/**/*.tsx  --cache",
@@ -99,6 +100,7 @@
             "git add"
         ],
         "*.{ts,tsx}": [
+            "yarn typecheck",
             "yarn lint:fix:ts",
             "yarn lint:style",
             "git add"
