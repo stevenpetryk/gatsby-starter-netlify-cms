@@ -76,7 +76,7 @@
     },
     "devDependencies": {
         "@types/lodash": "^4.14.161",
-        "@types/react-helmet": "^5.0.14",
+        "@types/react-helmet": "^5.0.16",
         "babel-plugin-styled-components": "^1.10.6",
         "babel-preset-gatsby": "^0.5.0",
         "gatsby-plugin-graphql-codegen": "^2.0.1",
