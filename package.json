@@ -48,7 +48,7 @@
         "stylelint-config-recess-order": "^2.0.3",
         "stylelint-config-recommended": "^3.0.0",
         "stylelint-config-styled-components": "^0.1.1",
-        "uuid": "^3.2.1"
+        "uuid": "^8.0.0"
     },
     "keywords": [
         "gatsby"
